@@ -150,6 +150,7 @@
               <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>  
               <fork>true</fork><!-- 这个是为了热部署 -->
               <warName>springboot</warName>
+              <failOnMissingWebXml>false</failOnMissingWebXml>
           </configuration>
       </plugin>      
     </plugins>
