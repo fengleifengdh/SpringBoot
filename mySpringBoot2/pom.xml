@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>springboot</groupId>
+  <artifactId>mySpringBoot2</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>mySpringBoot2 Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+ <!-- 父类 -->
+	<parent>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-parent</artifactId>
+       <version>1.4.1.RELEASE</version>
+   </parent> 
+   <!-- 如果不想继承父类的话，可以用以下的方式 -->
+<!-- 	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				Import dependency management from Spring Boot
+				 <groupId>org.springframework.boot</groupId>
+				 <artifactId>spring-boot-dependencies</artifactId>
+				 <version>1.4.1.RELEASE</version>
+				 <type>pom</type>
+				 <scope>import</scope>
+			 </dependency>
+		 </dependencies>
+	</dependencyManagement>-->
+  <dependencies> 
+  	<!-- junit测试依赖 -->
+     <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency> 
+    <!-- spring boot web依赖 -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-web</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-test</artifactId>
+	    <scope>test</scope>
+	</dependency>
+    <!-- 实行热部署 -->
+    <!-- 这个热部署可以用，但是会报错可能，所以我屏蔽了 -->
+<!--  	<dependency>
+	     <groupId>org.springframework.boot</groupId>
+	     <artifactId>spring-boot-devtools</artifactId>
+	     <optional>true</optional>optional=true,依赖不会传递，该项目依赖devtools；之后依赖myboot项目的项目如果想要使用devtools，需要重新引入
+	</dependency>  -->
+	<!-- jpa spring boot包 -->
+	<dependency>  
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-data-jpa</artifactId>
+	</dependency>	
+	<!-- mysql -->    
+	<dependency>
+	  <groupId>mysql</groupId>
+	  <artifactId>mysql-connector-java</artifactId>
+	</dependency>	
+	<!-- redis缓存 -->    
+	<dependency>  
+	    <groupId>org.springframework.boot</groupId>  
+	    <artifactId>spring-boot-starter-redis</artifactId>  
+	</dependency>  
+	
+	<!--Gson 用来解析json数据-->  
+	<dependency>  
+	    <groupId>com.google.code.gson</groupId>  
+	    <artifactId>gson</artifactId>  
+	</dependency>
+	<!-- 面向切面AOP -->
+	<dependency>  
+	    <groupId>org.springframework.boot</groupId>  
+	    <artifactId>spring-boot-starter-aop</artifactId>  
+	</dependency> 
+	<!-- servlet依赖 -->
+     <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <scope>provided</scope>
+    </dependency>	
+ <!--    jstl -->
+   <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>jstl</artifactId>
+    </dependency> 
+    <!-- jsp需要的包，不知道为什么叫做tomcat，好像加了这个包可以把项目放在外部tomcat -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-tomcat</artifactId>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-jasper</artifactId>
+    </dependency>
+    
+    <!-- jquery静态资源包 -->
+	<dependency>
+	    <groupId>org.webjars</groupId>
+	    <artifactId>jquery</artifactId>
+	    <version>2.1.4</version>
+	</dependency>
+	<!-- webjars静态资源版本控制 -->
+	<dependency>
+	    <groupId>org.webjars</groupId>
+	    <artifactId>webjars-locator</artifactId>
+	</dependency> 
+	<!-- 发送邮件 -->
+	<dependency>  
+	    <groupId>org.springframework.boot</groupId>  
+	    <artifactId>spring-boot-starter-mail</artifactId>  
+	</dependency>  
+	
+	<!-- 安全包 -->
+<!-- 	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-security</artifactId>
+	</dependency> -->
+	
+	
+  </dependencies>
+  <build>
+    <finalName>mySpringBoot2</finalName>
+    <!-- spring boot插件，方便发项目，打包 -->
+    <plugins>
+<!--       <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin> -->
+      <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+              <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>  
+              <fork>true</fork><!-- 这个是为了热部署 -->
+          </configuration>
+      </plugin>      
+    </plugins>
+   	<resources>
+		<resource>
+		    <directory>${basedir}/src/main/webapp</directory>
+		       <!--注意此次必须要放在此目录下才能被访问到-->
+		    <targetPath>META-INF/resources</targetPath> 
+		    <includes>
+		        <include>**/**</include>
+		    </includes>
+		</resource>
+		<resource>
+		    <directory>${basedir}/src/main/resources</directory>
+		    <includes>
+		        <include>**/**</include>
+		    </includes>
+		</resource>
+    </resources>
+  </build>
+  <properties>
+  	<java.version>1.8</java.version>
+  </properties>
+</project>
